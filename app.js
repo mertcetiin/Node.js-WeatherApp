@@ -17,22 +17,21 @@ if (typeof argv.l === 'string' && argv.l.length > 0) {
 
     console.log('Lokasyon bilgisi girildi!!!');
 
-    weather(argv.l, function (currentWeather) {
-        console.log(currentWeather);
+    weather(argv.l).then((currentWeather) => {
+        console.log(currentWeather)
+    }, (error) => {
+        console.log(error)
     })
 } else {
 
     console.log('Lokasyon bilgisi girilmedi. Tahmin ediliyor...');
 
-    location(function (location) {
-        if (!location) {
-            console.log('Lokasyon bilgisi alinamadii!!!')
-            return;
-        } else {
-            weather(location.city, function (currentWeather) {
-                console.log(currentWeather);
-            })
-        }
+    location().then((location) => {
+        return weather(location.city);
+    }).then((currentWeather) => {
+        console.log(currentWeather);
+    }).catch((error) => {
+        console.log(error)
     })
 
 }
