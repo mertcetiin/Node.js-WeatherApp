@@ -1,13 +1,16 @@
+require('dotenv').config();
 const request = require('request');
 
 
 module.exports = function (location) {
 
+    const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+
     return new Promise(function (resolve, reject) {
 
         const encodedLocation = encodeURIComponent(location);
 
-        const url = "https://api.openweathermap.org/data/2.5/weather?q=" + encodedLocation + ",tr&appid=33fb53775a5f8109e23b6e58a77223e3&units=metric";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedLocation},tr&appid=${apiKey}&units=metric`;
 
         if (!location) {
             return reject('Lokasyon bilgisi alinamadi!!');
